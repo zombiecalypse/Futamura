@@ -30,4 +30,12 @@
 
 (deftest spec-does-partial
   (is
-    (= 3 (spec '+ 1) 2)))
+    (= 3 ((spec '+ 1) 2)))
+  (is
+    (= 13 ((spec '+ 1 2 3) 7)))
+  (is
+    (= 8 ((spec '(fn [x y] (+ x y)) 1) 7))))
+
+(deftest compiler-is-same-as-eval
+  (is
+    (= 3 (((compiler eval) `(+ 1 2))))))

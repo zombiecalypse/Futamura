@@ -20,6 +20,10 @@
   {:pre [(fn? f)] :post [(fn? %)]}
   (mcurry curry f))
 
-(defn spec [sym_f x]
-  "Returns symbolic specialized evaluation of sym_f"
-  (curry (eval sym_f) x))
+(defn spec [sym_f & x]
+  "Returns specialized evaluation of sym_f"
+  (apply partial (cons (eval sym_f) x)))
+
+(defn compiler [interpreter]
+  (spec `spec interpreter))
+  
